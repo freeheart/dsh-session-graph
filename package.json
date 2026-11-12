@@ -1,6 +1,6 @@
 {
   "name": "@local/session-graph",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Interactive directed force graph of the DSH session trajectory, contributed as a Conversation view.",
   "author": {
@@ -40,7 +40,8 @@
     "icon.svg",
     "README.md",
     "LICENSE",
-    "SKILL.md"
+    "SKILL.md",
+    "docs/screenshots/*.png"
   ],
   "dsh": {
     "bundle": {

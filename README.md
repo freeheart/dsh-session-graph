@@ -19,15 +19,39 @@ Everything is derived from the loaded Session event window (`SessionBinding`
 event source), so it stays correct across fork, resume, and replay without any
 Host state.
 
+## Screenshots · 效果预览
+
+### Force layout · 力导向布局
+
+![Force layout: a live session trajectory rendered as a directed graph](docs/screenshots/force-layout.png)
+
+A real session rendered as a directed force graph (336 nodes, 191 tool calls,
+6 failures). Assistant steps are the green circles, tool calls are amber (failed
+ones red), large dark circles are user messages labelled with their turn number,
+and dashed edges mark turn boundaries.
+
+### Timeline layout · 时间线布局
+
+![Timeline layout: one lane per turn](docs/screenshots/timeline-layout.png)
+
+The same session in timeline mode: one horizontal lane per turn (`#1`, `#2`,
+`#3`) with chronological order left to right. This capture filters to user
+nodes to make the turn structure obvious; toolbar, filters, pan and zoom behave
+identically in both layouts.
+
 ## What it shows
 
-| Node | Meaning |
-| --- | --- |
-| Blue (`brand-primary`) | A user message |
-| Green (`state-success-primary`) | An assistant message (one step) |
-| Amber (`state-warn-primary`) | A tool call, merged with its result |
-| Red (`state-error-primary`) | A failed tool result, or a model retry |
-| Gray (`label-secondary`) | A context compaction |
+Node colors come from host theme tokens, so they follow the active light/dark
+theme (the screenshots use the author's light theme, where `brand-primary`
+renders near-black). Semantic meaning is stable across themes:
+
+| Node | Theme token | Meaning |
+| --- | --- | --- |
+| User message | `brand-primary` | A user message |
+| Assistant step | `state-success-primary` | An assistant message (one step) |
+| Tool call | `state-warn-primary` | A tool call, merged with its result |
+| Failed tool / retry | `state-error-primary` | A failed tool result, or a model retry |
+| Compaction | `label-secondary` | A context compaction |
 
 Edges: `assistant → tool` (call), `tool → assistant` (the result feeds the next
 step), `turn → turn` (dashed boundary), compaction/retry links.
@@ -97,6 +121,7 @@ git clone <repository-url> dsh-session-graph
   reads the session event window from its registration `inject` props.
 - `locale/en.json`, `locale/zh.json` — Plugin Manager display metadata.
 - `icon.svg` — original artwork.
+- `docs/screenshots/` — the effect screenshots embedded above.
 - `test/smoke.mjs` — headless checks (no browser required).
 
 The Client module uses only the `react` runtime module and host theme tokens
@@ -129,9 +154,10 @@ git checkout to run it.
   ordered after `chat` and `trajectory`; HMR reloads of this linked bundle keep
   exactly one registration.
 - The headless smoke suite passes (~60 checks).
-- Rendered visual verification (canvas output, light/dark appearance, pointer
-  interactions) was not possible in the authoring environment: the Web GUI
-  requires authentication and no browser control was exposed to the agent.
+- Rendered visual verification: the screenshots above were captured from a live
+  DSH profile and confirm that both layouts render (force: 336 nodes / 191 tool
+  calls / 6 failures; timeline: turn lanes). Automated pixel comparison and
+  light/dark theme switching are not part of the smoke suite.
 
 ## Author & license
 

@@ -1,0 +1,4 @@
+- insert:
+    - id: session-graph
+      name: '@local/session-graph'
+      config: {}

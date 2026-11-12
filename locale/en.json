@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Session graph",
+    "description": "Shows the session trajectory as an interactive directed force graph of turns, assistant steps, and tool calls."
+  }
+}
